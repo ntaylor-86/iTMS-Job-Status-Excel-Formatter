@@ -1,0 +1,34 @@
+# loads the spreadsheet into memory (two arrays: headings and all_rows)
+	at this stage it will not load the second column 'Order Date' into memory
+# sorts all_rows by multiple columns. Sorts by 'Due Date' then by 'Client Code' then by 'Job No'
+# starts removing unwanted rows.
+	if (Client Code column == 'DRAW', 'SCHEDULE', 'TESTCLIENT', 'GCI-NON-PRODUCTIVE-TIME') {
+		that row will be deleted}
+	if (Desp column == 'All') {
+		that row will be deleted}
+# sorts the departments correctly (shuffles the columns around)
+	correct order == PROG, 3030, LISMAC, ROTO, BSAW, FOLD, GMAC, PEMS, TIG, MIG, XPNT, SANDBL, PC, Sub
+# starts to create the new spreadsheet in memory
+# enters in all the headings
+	changes all the cells to bold
+	if (column <= 2) {the text alignment will change to center}
+	if (column >= 5) {the text alignment will change to center}
+	if (heading == 'Sub') {the cells background is turned red}
+# enters in the rest of the data
+	as it's adding the data, the rows are re-ordered to the correct order (see above)
+	if (column == 2) {date object has to be formatted correctly e.g. dd/mm/YYYY}
+	if (column >= 5 or column <= 2) {the text align will change to center}
+# starts to style the spreadsheet
+	searches for and highlights red all cells in the client code column that are:
+		(EXTERNAL-RECUT, RECUT-INTERNAL, MISSEDPROCESS, REWORK-INTERNAL, INTERNAL, ADDITION_2_CURRENT_JOB)
+	searches for and hghlights blue all cells in the client code column that are:
+		(BUSTECH)
+	searches for and highlights red all cells in the Desp column that == 'Part'
+	searches for and highlights red all cells in the Sub column that == 'Sub'
+# finding cells that contain an unfinished process
+	loops through each cell in each row if the column >= 8
+		it splits the contents of the cell e.g. '8 | 6' becomes an array: column_split['8', '|', '6']
+		it compares the split values if (the left value > the right value) {the cell is highlighted yellow}
+		if there are no cells to highlight in a row {the Job Status column text = 'All clocked' and cell background chaged to greed}
+# resizes the column widths
+# saves the new spreadsheet to disk the todays date appended to the front e.g. '2018-10-04 new_file.xlsx'
