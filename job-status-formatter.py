@@ -269,7 +269,7 @@ for row_counter, row in enumerate(all_rows_reordered, 2):
             if len(column_split) > 1:
                 left_value = column_split[0]
                 right_value = column_split[2]
-                if left_value > right_value:  # testing if the left value is greater than the right value e.g. 4 | 1
+                if int(left_value) > int(right_value):  # testing if the left value is greater than the right value e.g. 4 | 1
                     column_letter = chr(column_counter + 64)  # see http://www.asciitable.com/ (A = 1, Dec for A is 65)
                     highlight_process_array.append([column_letter, row_counter])
                     all_clocked = True
