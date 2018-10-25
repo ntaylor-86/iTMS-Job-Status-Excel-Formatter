@@ -11,10 +11,51 @@ import os
 import shutil
 import datetime
 
+print(" N4tH4N's")
+print("     __      ___.")
+print("    |__| ____\\_ |__       ")                                 
+print("    |  |/  _ \\| __ \\      ")
+print("    |  (  <_> ) \\_\\ \\     ")
+print("/\\__|  |\\____/|___  /     ")
+print("\\______|          \\/             ")
+print("          __          __                                   ")
+print("  _______/  |______ _/  |_ __ __  ______                   ")
+print(" /  ___/\\   __\\__  \\\\   __\\  |  \\/  ___/                   ")
+print(" \\___ \\  |  |  / __ \\|  | |  |  /\\___ \\                    ")
+print("/____  > |__| (____  /__| |____//____  >                   ")
+print("     \\/            \\/                \\/                    ")
+print("  _____                            __    __                ")
+print("_/ ____\\___________  _____ _____ _/  |__/  |_  ___________ ")
+print("\\   __\\/  _ \\_  __ \\/     \\\\__  \\\\   __\\   __\\/ __ \\_  __ \\ ")
+print(" |  | (  <_> )  | \\/  Y Y  \\/ __ \\|  |  |  | \\  ___/|  | \\/ ")
+print(" |__|  \\____/|__|  |__|_|  (____  /__|  |__|  \\___  >__|   ")
+print("                         \\/     \\/                \\/       ")
+print("")
+
 ###############################
 #### EXCEL FILE TO WORK ON ####
 file_name = 'book1.xlsx'
 ###############################
+
+######################################################
+####  testing if a spreadsheet to work on exists  ####
+######################################################
+file_exists = os.path.isfile(file_name)
+if not file_exists:
+    print("")
+    print("")
+    print("")
+    print("There has been an,               ._. ")
+    print("  __________________  ___________| | ")
+    print("_/ __ \\_  __ \\_  __ \\/  _ \\_  __ \\ | ")
+    print("\\  ___/|  | \\/|  | \\(  <_> )  | \\/\\| ")
+    print(" \\___  >__|   |__|   \\____/|__|   __ ")
+    print("     \\/                           \\/ ")
+    print("")
+    print("COULD NOT FiND ANY FiLE CALLED 'Book1.xlsx'")
+    print("")
+    input("Press any ENTER to continue...")
+    exit()  # exiting the program
 
 ###############################  used to style the cells
 red_background_colour = PatternFill("solid", fgColor="ffc7ce")  # This will fill the cell RED
@@ -60,7 +101,7 @@ all_rows.sort(key = lambda l: (l[1], l[2], l[0]))
 
 
 print("Removing 'DRAW', 'SCHEDULE', 'TESTCLIENT', 'GCI-NON-PRODUCTIVE-TIME' from the spreadsheet")
-print("and clearing the conents of the 'Job Status' column...")
+print("and clearing the contents of the 'Job Status' column...")
 index_numbers_to_delete = []
 for counter, line in enumerate(all_rows):
     line[5] = ""  # clearing contents of the 'Job Status' column
@@ -124,7 +165,7 @@ for index_number in correct_index_order:
 ####  moving the original spreadsheet file  ####
 ################################################
 
-# moving the origianl spreadsheet to the '_origianl_files' folder with the date appended to the file name
+# moving the original spreadsheet to the '_original_files' folder with the date appended to the file name
 print("Moving the original spreadsheet to the '_original_files' folder...")
 # shutil.move(file_name, os.path.join(old_files_folder, old_file_name))
 
@@ -201,7 +242,7 @@ for row_counter, line in enumerate(all_rows, 2):
 print("Highlighting the 'Client Code' column (red) for:")
 print("EXTERNAL-RECUT, RECUT-INTERNAL, MISSEDPROCESS, REWORK-INTERNAL, INTERNAL, ADDITION_2_CURRENT_JOB...")
 highlight_client_code_array = []
-highliht_bustech_array = []
+highlight_bustech_array = []
 for row_counter, client in enumerate(all_rows, 2):
     if client[2] == "EXTERNAL-RECUT":
         highlight_client_code_array.append(row_counter)
@@ -216,7 +257,7 @@ for row_counter, client in enumerate(all_rows, 2):
     elif client[2] == "ADDITION_2_CURRENT_JOB":
         highlight_client_code_array.append(row_counter)
     elif client[2] == "BUSTECH":  # BUSTECH gets highlighted a blue colour
-        highliht_bustech_array.append(row_counter)
+        highlight_bustech_array.append(row_counter)
 
 for x in highlight_client_code_array:
     column = 'C'
@@ -224,7 +265,7 @@ for x in highlight_client_code_array:
     cell = new_sheet[(column + str(row))]
     cell.fill = red_background_colour  # G requested that the client code cell be highlighted RED
 
-for x in highliht_bustech_array:  # highlighting all the client code cells that have 'BUSTECH'
+for x in highlight_bustech_array:  # highlighting all the client code cells that have 'BUSTECH'
     column = 'C'
     row = x
     cell = new_sheet[(column + str(row))]
@@ -256,6 +297,13 @@ for x in highlight_sub_column_array:
     cell = new_sheet[(column + str(row))]
     cell.fill = red_background_colour
 
+# if row is all clocked and the customer is in this array, the row will be deleted
+clients_to_delete_if_row_all_clocked = [
+    "RECUT-INTERNAL", "MISSEDPROCESS", "OBSOLETE-PROCESS",
+    "REWORK-INTERNAL", "INTERNAL", "ADDITION_2_CURRENT_JOB"
+]
+rows_to_delete = []
+
 print("Finding which cells contain an unfinished process...")
 highlight_process_array = []
 all_clocked_array = []
@@ -275,6 +323,10 @@ for row_counter, row in enumerate(all_rows_reordered, 2):
                     all_clocked = True
     if all_clocked == False:
         all_clocked_array.append(row_counter)
+        # if all the processes have been done and if the client is in the 'clients_to_delete_if_row_all_clocked'
+        # the row number is appended to rows to delete
+        if row[2] in clients_to_delete_if_row_all_clocked:
+            rows_to_delete.append(row_counter)
 
 print("Entering 'All clocked' on jobs that have no unfinished processes...")
 for x in all_clocked_array:
@@ -288,6 +340,11 @@ for x in highlight_process_array:
     cell_coordinate = x[0] + str(x[1])  # e.g. 'N3'
     cell = new_sheet[cell_coordinate]
     cell.fill = yellow_background_colour
+
+print("Deleting rows from the spreadsheet if the 'Job Status' is all clocked,")
+print("    and the customer is in the 'clients_to_delete_if_row_all_clocked'")
+for row_number in rows_to_delete:
+    new_sheet.delete_rows(row_number, 1)
 
 ################################
 ####  resizing the columns  ####
