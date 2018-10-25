@@ -29,6 +29,9 @@
 	loops through each cell in each row if the column >= 8
 		it splits the contents of the cell e.g. '8 | 6' becomes an array: column_split['8', '|', '6']
 		it compares the split values if (the left value > the right value) {the cell is highlighted yellow}
-		if there are no cells to highlight in a row {the Job Status column text = 'All clocked' and cell background chaged to greed}
+		if there are no cells to highlight in a row {the Job Status column text = 'All clocked' and cell background changed to green}
+# if the customer is in 'clients_to_delete_if_row_all_clocked' and there are no unfinished process's in the row
+	it will add the row number to the array 'rows_to_delete'
+	deletes all the rows in the 'rows_to_delete' array
 # resizes the column widths
 # saves the new spreadsheet to disk the todays date appended to the front e.g. '2018-10-04 new_file.xlsx'
