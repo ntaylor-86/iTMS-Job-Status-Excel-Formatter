@@ -256,6 +256,13 @@ for x in highlight_sub_column_array:
     cell = new_sheet[(column + str(row))]
     cell.fill = red_background_colour
 
+# if row is all clocked and the customer is in this array, the row will be deleted
+clients_to_delete_if_row_all_clocked = [
+    "RECUT-INTERNAL", "MISSEDPROCESS", "OBSOLETE-PROCESS",
+    "REWORK-INTERNAL", "INTERNAL", "ADDITION_2_CURRENT_JOB"
+]
+rows_to_delete = []
+
 print("Finding which cells contain an unfinished process...")
 highlight_process_array = []
 all_clocked_array = []
@@ -275,6 +282,10 @@ for row_counter, row in enumerate(all_rows_reordered, 2):
                     all_clocked = True
     if all_clocked == False:
         all_clocked_array.append(row_counter)
+        # if all the processes have been done and if the client is in the 'clients_to_delete_if_row_all_clocked'
+        # the row number is appended to rows to delete
+        if row[2] in clients_to_delete_if_row_all_clocked:
+            rows_to_delete.append(row_counter)
 
 print("Entering 'All clocked' on jobs that have no unfinished processes...")
 for x in all_clocked_array:
@@ -288,6 +299,11 @@ for x in highlight_process_array:
     cell_coordinate = x[0] + str(x[1])  # e.g. 'N3'
     cell = new_sheet[cell_coordinate]
     cell.fill = yellow_background_colour
+
+print("Deleting rows from the spreadsheet if the 'Job Status' is all clocked,")
+print("    and the customer is in the 'clients_to_delete_if_row_all_clocked'")
+for row_number in rows_to_delete:
+    new_sheet.delete_rows(row_number, 1)
 
 ################################
 ####  resizing the columns  ####
