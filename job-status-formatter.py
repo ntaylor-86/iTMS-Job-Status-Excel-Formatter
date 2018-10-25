@@ -11,10 +11,51 @@ import os
 import shutil
 import datetime
 
+print(" N4tH4N's")
+print("     __      ___.")
+print("    |__| ____\\_ |__       ")                                 
+print("    |  |/  _ \\| __ \\      ")
+print("    |  (  <_> ) \\_\\ \\     ")
+print("/\\__|  |\\____/|___  /     ")
+print("\\______|          \\/             ")
+print("          __          __                                   ")
+print("  _______/  |______ _/  |_ __ __  ______                   ")
+print(" /  ___/\\   __\\__  \\\\   __\\  |  \\/  ___/                   ")
+print(" \\___ \\  |  |  / __ \\|  | |  |  /\\___ \\                    ")
+print("/____  > |__| (____  /__| |____//____  >                   ")
+print("     \\/            \\/                \\/                    ")
+print("  _____                            __    __                ")
+print("_/ ____\\___________  _____ _____ _/  |__/  |_  ___________ ")
+print("\\   __\\/  _ \\_  __ \\/     \\\\__  \\\\   __\\   __\\/ __ \\_  __ \\ ")
+print(" |  | (  <_> )  | \\/  Y Y  \\/ __ \\|  |  |  | \\  ___/|  | \\/ ")
+print(" |__|  \\____/|__|  |__|_|  (____  /__|  |__|  \\___  >__|   ")
+print("                         \\/     \\/                \\/       ")
+print("")
+
 ###############################
 #### EXCEL FILE TO WORK ON ####
 file_name = 'book1.xlsx'
 ###############################
+
+######################################################
+####  testing if a spreadsheet to work on exists  ####
+######################################################
+file_exists = os.path.isfile(file_name)
+if not file_exists:
+    print("")
+    print("")
+    print("There has been an,")
+    print("                                 ._. ")
+    print("  __________________  ___________| | ")
+    print("_/ __ \\_  __ \\_  __ \\/  _ \\_  __ \\ | ")
+    print("\\  ___/|  | \\/|  | \\(  <_> )  | \\/\\| ")
+    print(" \\___  >__|   |__|   \\____/|__|   __ ")
+    print("     \\/                           \\/ ")
+    print("")
+    print("COULD NOT FiND ANY FiLE CALLED 'Book1.xlsx'")
+    print("")
+    input("Press any ENTER to continue...")
+    exit()  # exiting the program
 
 ###############################  used to style the cells
 red_background_colour = PatternFill("solid", fgColor="ffc7ce")  # This will fill the cell RED
