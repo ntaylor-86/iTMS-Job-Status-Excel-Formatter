@@ -134,6 +134,3 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
-# Excel spreadsheets
-.xlsx
