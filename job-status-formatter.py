@@ -30,7 +30,7 @@ print("\\   __\\/  _ \\_  __ \\/     \\\\__  \\\\   __\\   __\\/ __ \\_  __ \\ "
 print(" |  | (  <_> )  | \\/  Y Y  \\/ __ \\|  |  |  | \\  ___/|  | \\/ ")
 print(" |__|  \\____/|__|  |__|_|  (____  /__|  |__|  \\___  >__|   ")
 print("                         \\/     \\/                \\/       ")
-print("")
+print("version 1.1 - BUG FIX, not removing the correct rows.")
 
 ###############################
 #### EXCEL FILE TO WORK ON ####
@@ -343,6 +343,7 @@ for x in highlight_process_array:
 
 print("Deleting rows from the spreadsheet if the 'Job Status' is all clocked,")
 print("    and the customer is in the 'clients_to_delete_if_row_all_clocked'")
+rows_to_delete.reverse()  #  important to reverse the list so it deletes rows from the bottom
 for row_number in rows_to_delete:
     new_sheet.delete_rows(row_number, 1)
 
