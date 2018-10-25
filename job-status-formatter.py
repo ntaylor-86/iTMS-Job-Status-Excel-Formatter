@@ -60,7 +60,7 @@ all_rows.sort(key = lambda l: (l[1], l[2], l[0]))
 
 
 print("Removing 'DRAW', 'SCHEDULE', 'TESTCLIENT', 'GCI-NON-PRODUCTIVE-TIME' from the spreadsheet")
-print("and clearing the conents of the 'Job Status' column...")
+print("and clearing the contents of the 'Job Status' column...")
 index_numbers_to_delete = []
 for counter, line in enumerate(all_rows):
     line[5] = ""  # clearing contents of the 'Job Status' column
@@ -124,7 +124,7 @@ for index_number in correct_index_order:
 ####  moving the original spreadsheet file  ####
 ################################################
 
-# moving the origianl spreadsheet to the '_origianl_files' folder with the date appended to the file name
+# moving the original spreadsheet to the '_original_files' folder with the date appended to the file name
 print("Moving the original spreadsheet to the '_original_files' folder...")
 # shutil.move(file_name, os.path.join(old_files_folder, old_file_name))
 
@@ -201,7 +201,7 @@ for row_counter, line in enumerate(all_rows, 2):
 print("Highlighting the 'Client Code' column (red) for:")
 print("EXTERNAL-RECUT, RECUT-INTERNAL, MISSEDPROCESS, REWORK-INTERNAL, INTERNAL, ADDITION_2_CURRENT_JOB...")
 highlight_client_code_array = []
-highliht_bustech_array = []
+highlight_bustech_array = []
 for row_counter, client in enumerate(all_rows, 2):
     if client[2] == "EXTERNAL-RECUT":
         highlight_client_code_array.append(row_counter)
@@ -216,7 +216,7 @@ for row_counter, client in enumerate(all_rows, 2):
     elif client[2] == "ADDITION_2_CURRENT_JOB":
         highlight_client_code_array.append(row_counter)
     elif client[2] == "BUSTECH":  # BUSTECH gets highlighted a blue colour
-        highliht_bustech_array.append(row_counter)
+        highlight_bustech_array.append(row_counter)
 
 for x in highlight_client_code_array:
     column = 'C'
@@ -224,7 +224,7 @@ for x in highlight_client_code_array:
     cell = new_sheet[(column + str(row))]
     cell.fill = red_background_colour  # G requested that the client code cell be highlighted RED
 
-for x in highliht_bustech_array:  # highlighting all the client code cells that have 'BUSTECH'
+for x in highlight_bustech_array:  # highlighting all the client code cells that have 'BUSTECH'
     column = 'C'
     row = x
     cell = new_sheet[(column + str(row))]
