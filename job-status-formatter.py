@@ -31,6 +31,9 @@ print(" |  | (  <_> )  | \\/  Y Y  \\/ __ \\|  |  |  | \\  ___/|  | \\/ ")
 print(" |__|  \\____/|__|  |__|_|  (____  /__|  |__|  \\___  >__|   ")
 print("                         \\/     \\/                \\/       ")
 print("version 1.1 - BUG FIX, not removing the correct rows.")
+print("version 1.2 - BUG FIX, added a 'try' and 'except' to the sorting function.")
+print("                       This will catch errors if there are rows with blank due dates.")
+print("")
 
 ###############################
 #### EXCEL FILE TO WORK ON ####
@@ -54,7 +57,7 @@ if not file_exists:
     print("")
     print("COULD NOT FiND ANY FiLE CALLED 'Book1.xlsx'")
     print("")
-    input("Press any ENTER to continue...")
+    input("Press any ENTER to exit...")
     exit()  # exiting the program
 
 ###############################  used to style the cells
@@ -97,7 +100,20 @@ print( "There are {} rows to process.".format(total_number_of_rows))
 # print("Sorting all the data by the 'Client Code' column...")
 # all_rows = sorted(all_rows, key=lambda client: client[2])
 print("Sorting all the data by 'Due Date' then by 'Client Code' then by 'Job No'...")
-all_rows.sort(key = lambda l: (l[1], l[2], l[0]))
+try:
+    all_rows.sort(key = lambda l: (l[1], l[2], l[0]))
+except TypeError:
+    print("")
+    print("There has been an,               ._. ")
+    print("  __________________  ___________| | ")
+    print("_/ __ \\_  __ \\_  __ \\/  _ \\_  __ \\ | ")
+    print("\\  ___/|  | \\/|  | \\(  <_> )  | \\/\\| ")
+    print(" \\___  >__|   |__|   \\____/|__|   __ ")
+    print("     \\/                           \\/ ")
+    print("Is there a row in your spreadsheet that has a blank due date??")
+    print("")
+    input("Press any ENTER to exit...")
+    exit()  # exiting the program
 
 
 print("Removing 'DRAW', 'SCHEDULE', 'TESTCLIENT', 'GCI-NON-PRODUCTIVE-TIME' from the spreadsheet")
