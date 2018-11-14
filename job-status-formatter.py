@@ -33,6 +33,7 @@ print("                         \\/     \\/                \\/       ")
 print("version 1.1 - BUG FIX, not removing the correct rows.")
 print("version 1.2 - BUG FIX, added a 'try' and 'except' to the sorting function.")
 print("                       This will catch errors if there are rows with blank due dates.")
+print("version 1.3 - UPDATE, 'JIGS' client code will now be deleted.")
 print("")
 
 ###############################
@@ -316,7 +317,7 @@ for x in highlight_sub_column_array:
 # if row is all clocked and the customer is in this array, the row will be deleted
 clients_to_delete_if_row_all_clocked = [
     "RECUT-INTERNAL", "MISSEDPROCESS", "OBSOLETE-PROCESS",
-    "REWORK-INTERNAL", "INTERNAL", "ADDITION_2_CURRENT_JOB"
+    "REWORK-INTERNAL", "INTERNAL", "ADDITION_2_CURRENT_JOB", "JIGS"
 ]
 rows_to_delete = []
 
