@@ -358,6 +358,17 @@ for x in highlight_process_array:
     cell = new_sheet[cell_coordinate]
     cell.fill = yellow_background_colour
 
+print("Finding the rows which are LASER only...")
+laser_only_rows = []
+for row_counter, row in enumerate(all_rows_reordered, 2):
+    row_is_laser_only = True
+    for process in range(9, 20):
+        print(row[process])
+        if row[process] != None:
+            row_is_laser_only = False
+    if row_is_laser_only:
+        laser_only_rows.append(row_counter)
+
 print("Deleting rows from the spreadsheet if the 'Job Status' is all clocked,")
 print("    and the customer is in the 'clients_to_delete_if_row_all_clocked'")
 rows_to_delete.reverse()  #  important to reverse the list so it deletes rows from the bottom
