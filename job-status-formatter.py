@@ -66,6 +66,7 @@ red_background_colour = PatternFill("solid", fgColor="ffc7ce")  # This will fill
 yellow_background_colour = PatternFill("solid", fgColor="ffff00")  # This will fill the cell YELLOW
 bussy_blue_background_colour = PatternFill("solid", fgColor="bdd7ee") # blue for bustech
 all_clocked_colour = PatternFill("solid", fgColor="C6EFCE")  # all clocked colour is green
+laser_only_colour = PatternFill("solid", fgColor="47fff5")  # jobs that are laser cut only
 ###############################
 
 CURRENT_DIRECTORY = os.getcwd()
@@ -263,6 +264,8 @@ highlight_bustech_array = []
 for row_counter, client in enumerate(all_rows, 2):
     if client[2] == "EXTERNAL-RECUT":
         highlight_client_code_array.append(row_counter)
+    elif client[2] == "EXTERNAL-REWORK":
+        highlight_client_code_array.append(row_counter)
     elif client[2] == "RECUT-INTERNAL":
         highlight_client_code_array.append(row_counter)
     elif client[2] == "MISSEDPROCESS":
@@ -361,13 +364,19 @@ for x in highlight_process_array:
 print("Finding the rows which are LASER only...")
 laser_only_rows = []
 for row_counter, row in enumerate(all_rows_reordered, 2):
-    row_is_laser_only = True
-    for process in range(9, 20):
-        print(row[process])
-        if row[process] != None:
-            row_is_laser_only = False
-    if row_is_laser_only:
-        laser_only_rows.append(row_counter)
+        row_is_laser_only = True
+        for column_counter, column in enumerate(row, 1):
+            if column_counter >= 10 and column_counter <= 20:  # 
+                print(column)
+                if column != None:
+                    row_is_laser_only = False
+        if row_is_laser_only:
+            laser_only_rows.append(row_counter)
+
+
+print("Highlighting the rows which are LASER only...")
+for x in laser_only_rows:
+    print(x)
 
 print("Deleting rows from the spreadsheet if the 'Job Status' is all clocked,")
 print("    and the customer is in the 'clients_to_delete_if_row_all_clocked'")
