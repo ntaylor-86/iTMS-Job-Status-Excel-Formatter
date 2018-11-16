@@ -34,6 +34,7 @@ print("version 1.1 - BUG FIX, not removing the correct rows.")
 print("version 1.2 - BUG FIX, added a 'try' and 'except' to the sorting function.")
 print("                       This will catch errors if there are rows with blank due dates.")
 print("version 1.3 - UPDATE, 'JIGS' client code will now be deleted.")
+print("version 1.4 - UPDATE, Now highlights jobs which are [ LASER CUT ONLY ].")
 print("")
 
 ###############################
@@ -64,8 +65,11 @@ if not file_exists:
 ###############################  used to style the cells
 red_background_colour = PatternFill("solid", fgColor="ffc7ce")  # This will fill the cell RED
 yellow_background_colour = PatternFill("solid", fgColor="ffff00")  # This will fill the cell YELLOW
-bussy_blue_background_colour = PatternFill("solid", fgColor="bdd7ee") # blue for bustech
+bussy_blue_background_colour = PatternFill("solid", fgColor="d4f4f9") # blue for bustech
 all_clocked_colour = PatternFill("solid", fgColor="C6EFCE")  # all clocked colour is green
+laser_cut_only_colour = PatternFill("solid", fgColor="32e3ff")  # jobs that are laser cut only
+
+white_font_colour = Font(color="ffffff")
 ###############################
 
 CURRENT_DIRECTORY = os.getcwd()
@@ -263,6 +267,8 @@ highlight_bustech_array = []
 for row_counter, client in enumerate(all_rows, 2):
     if client[2] == "EXTERNAL-RECUT":
         highlight_client_code_array.append(row_counter)
+    elif client[2] == "EXTERNAL-REWORK":
+        highlight_client_code_array.append(row_counter)
     elif client[2] == "RECUT-INTERNAL":
         highlight_client_code_array.append(row_counter)
     elif client[2] == "MISSEDPROCESS":
@@ -357,6 +363,31 @@ for x in highlight_process_array:
     cell_coordinate = x[0] + str(x[1])  # e.g. 'N3'
     cell = new_sheet[cell_coordinate]
     cell.fill = yellow_background_colour
+
+print("Finding the rows which are LASER only...")
+laser_only_rows = []
+for row_counter, row in enumerate(all_rows_reordered, 2):
+        row_is_laser_only = True
+        for column_counter, column in enumerate(row, 1):
+            if column_counter >= 10 and column_counter <= 20:  # 
+                if column != None:
+                    row_is_laser_only = False
+        if row_is_laser_only:
+            laser_only_rows.append(row_counter)
+
+
+print("Highlighting the rows which are LASER only...")
+for row_number in laser_only_rows:
+    current_cell_value = str(all_rows_reordered[row_number][3])  #  this value will be the Job Description Column
+    if current_cell_value == "None":
+        current_cell_value = ""
+    else:
+        current_cell_value = str(current_cell_value) + "  -  "
+    new_cell_value = str(current_cell_value) + "[ LASER CUT ONLY ]"
+    new_sheet.cell(row=row_number, column=4).value = new_cell_value
+    new_sheet.cell(row=row_number, column=4).fill = laser_cut_only_colour
+    new_sheet.cell(row=row_number, column=4).font = white_font_colour
+
 
 print("Deleting rows from the spreadsheet if the 'Job Status' is all clocked,")
 print("    and the customer is in the 'clients_to_delete_if_row_all_clocked'")
