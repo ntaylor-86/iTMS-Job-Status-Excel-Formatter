@@ -375,18 +375,15 @@ for row_counter, row in enumerate(all_rows_reordered, 2):
         if row_is_laser_only:
             laser_only_rows.append(row_counter)
 
-
-print("Highlighting the rows which are LASER only...")
-for row_number in laser_only_rows:
-    current_cell_value = str(all_rows_reordered[row_number][3])  #  this value will be the Job Description Column
-    if current_cell_value == "None":
-        current_cell_value = ""
-    else:
-        current_cell_value = str(current_cell_value) + "  -  "
-    new_cell_value = str(current_cell_value) + "[ LASER CUT ONLY ]"
-    new_sheet.cell(row=row_number, column=4).value = new_cell_value
-    new_sheet.cell(row=row_number, column=4).fill = laser_cut_only_colour
-    new_sheet.cell(row=row_number, column=4).font = white_font_colour
+print("Highlighting all the rows which are LASER only...")
+for x in laser_only_rows:
+    cell_coordinate = "D{0}".format(x)
+    cell = new_sheet[cell_coordinate]
+    text = cell.value
+    print("{0} - {1}".format(x, text))
+    cell.fill = laser_cut_only_colour
+    cell.font = white_font_colour
+    cell.value = "{0}  [ LASER CUT ONLY ]".format(text)
 
 
 print("Deleting rows from the spreadsheet if the 'Job Status' is all clocked,")
