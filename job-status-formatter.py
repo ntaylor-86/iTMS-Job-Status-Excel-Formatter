@@ -35,6 +35,8 @@ print("version 1.2 - BUG FIX, added a 'try' and 'except' to the sorting function
 print("                       This will catch errors if there are rows with blank due dates.")
 print("version 1.3 - UPDATE, 'JIGS' client code will now be deleted.")
 print("version 1.4 - UPDATE, Now highlights jobs which are [ LASER CUT ONLY ].")
+print("version 1.5 - BUG FIX, row values getting mixed up with the LASER CUT ONLY jobs.")
+print("                       rewrote the entire function from scratch, so far so good... more testing needed.")
 print("")
 
 ###############################
