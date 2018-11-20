@@ -371,7 +371,7 @@ laser_only_rows = []
 for row_counter, row in enumerate(all_rows_reordered, 2):
         row_is_laser_only = True
         for column_counter, column in enumerate(row, 1):
-            if column_counter >= 10 and column_counter <= 20:  # 
+            if column_counter >= 10:  # 
                 if column != None:
                     row_is_laser_only = False
         if row_is_laser_only:
