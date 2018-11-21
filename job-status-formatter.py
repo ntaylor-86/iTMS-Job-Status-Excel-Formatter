@@ -37,6 +37,7 @@ print("version 1.3 - UPDATE, 'JIGS' client code will now be deleted.")
 print("version 1.4 - UPDATE, Now highlights jobs which are [ LASER CUT ONLY ].")
 print("version 1.5 - BUG FIX, row values getting mixed up with the LASER CUT ONLY jobs.")
 print("                       rewrote the entire function from scratch, so far so good... more testing needed.")
+print("version 1.6 - UPDATE, The SUB column is now included when searching for [ LASER CUT ONLY ] parts")
 print("")
 
 ###############################
