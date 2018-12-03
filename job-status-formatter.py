@@ -157,7 +157,8 @@ correct_order = [  # this is the correct order that 'G' wants
     "67 PEMS",
     "7 TIG",
     "52 MIG",
-    "90 XPNT",
+    # "90 XPNT",  ##  taking this our for now, I think it's been replace with STOPA & CLEAN
+    "44 STPCLN",
     "36 SANDBL",
     "21 PC",
     "Sub"
