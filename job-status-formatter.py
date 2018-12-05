@@ -38,6 +38,8 @@ print("version 1.4 - UPDATE, Now highlights jobs which are [ LASER CUT ONLY ].")
 print("version 1.5 - BUG FIX, row values getting mixed up with the LASER CUT ONLY jobs.")
 print("                       rewrote the entire function from scratch, so far so good... more testing needed.")
 print("version 1.6 - UPDATE, The SUB column is now included when searching for [ LASER CUT ONLY ] parts")
+print("version 1.7 - UPDATE, The paint column has been replaced with STOPA & CLEAN")
+print("                      the STOPA column will be positioned after the 3030 column")
 print("")
 
 ###############################
@@ -149,6 +151,7 @@ print("There are now {} rows left to process.".format(total_number_of_rows))
 correct_order = [  # this is the correct order that 'G' wants
     "1 PROG",
     "4 3030",
+    "44 STPCLN",
     "56 LISMAC",
     "6 ROTO",
     "53 BSAW",
@@ -158,7 +161,6 @@ correct_order = [  # this is the correct order that 'G' wants
     "7 TIG",
     "52 MIG",
     # "90 XPNT",  ##  taking this our for now, I think it's been replace with STOPA & CLEAN
-    "44 STPCLN",
     "36 SANDBL",
     "21 PC",
     "Sub"
@@ -210,6 +212,8 @@ for counter, title in enumerate(re_ordered_headings, 1):
         title = "PROG"
     elif title == "4 3030":
         title = 3030
+    elif title == "44 STPCLN":
+        title = "STOPA"
     elif title == "56 LISMAC":
         title = "LIS"
     elif title == "6 ROTO":
@@ -226,8 +230,8 @@ for counter, title in enumerate(re_ordered_headings, 1):
         title = "TIG"
     elif title == "52 MIG":
         title = "MIG"
-    elif title == "90 XPNT":
-        title = "PNT"
+    # elif title == "90 XPNT":  ##  PAINT HAS BEEN REMOVED FROM THE SPREADSHEET FOR NOW...
+    #     title = "PNT"
     elif title == "36 SANDBL":
         title = "SBL"
     elif title == "21 PC":
@@ -402,7 +406,7 @@ for row_number in rows_to_delete:
 
 print("Resizing the column widths...")
 column_width_array = [ ["A", 7], ["B", 12], ["C", 25], ["D", 80], ["E", 7], 
-                    ["F", 14], ["G", 6.5], ["H", 9.5], ["I", 9.5], ["J", 6], ["K", 9.5],
+                    ["F", 14], ["G", 6.5], ["H", 9.5], ["I", 9.5], ["J", 7], ["K", 9.5],
                     ["L", 7], ["M", 7], ["N", 8], ["O", 7], ["P", 7], ["Q", 7],
                     ["R", 7], ["S", 7], ["T", 7], ["U", 6]]
 for y in column_width_array:
