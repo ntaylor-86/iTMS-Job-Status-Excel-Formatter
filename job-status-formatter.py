@@ -40,6 +40,7 @@ print("                       rewrote the entire function from scratch, so far s
 print("version 1.6 - UPDATE, The SUB column is now included when searching for [ LASER CUT ONLY ] parts")
 print("version 1.7 - UPDATE, The paint column has been replaced with STOPA & CLEAN")
 print("                      the STOPA column will be positioned after the 3030 column")
+print("version 1.8 - UPDATE, The columns it checks for LASER CUT ONLY need to be updated after adding the STOPA column")
 print("")
 
 ###############################
@@ -377,7 +378,7 @@ laser_only_rows = []
 for row_counter, row in enumerate(all_rows_reordered, 2):
         row_is_laser_only = True
         for column_counter, column in enumerate(row, 1):
-            if column_counter >= 10:  # 
+            if column_counter >= 11:  #  only looking at columns past STOPA & CLEAN
                 if column != None:
                     row_is_laser_only = False
         if row_is_laser_only:
