@@ -41,6 +41,8 @@ print("version 1.6 - UPDATE, The SUB column is now included when searching for [
 print("version 1.7 - UPDATE, The paint column has been replaced with STOPA & CLEAN")
 print("                      the STOPA column will be positioned after the 3030 column")
 print("version 1.8 - UPDATE, The columns it checks for LASER CUT ONLY need to be updated after adding the STOPA column")
+print("version 1.9 - BUG FIX, put '90 XPNT' back into the correct_order array, with no 53 BSAW")
+print("                       this was causing issues.")
 print("")
 
 ###############################
@@ -161,7 +163,7 @@ correct_order = [  # this is the correct order that 'G' wants
     "67 PEMS",
     "7 TIG",
     "52 MIG",
-    # "90 XPNT",  ##  taking this our for now, I think it's been replace with STOPA & CLEAN
+    "90 XPNT",  ##  taking this our for now, I think it's been replace with STOPA & CLEAN  (PUT BACK IN 10/10/2019, NO SAW IN THE SCHEDULE BROKE A LOT OF THINGS)
     "36 SANDBL",
     "21 PC",
     "Sub"
@@ -231,8 +233,8 @@ for counter, title in enumerate(re_ordered_headings, 1):
         title = "TIG"
     elif title == "52 MIG":
         title = "MIG"
-    # elif title == "90 XPNT":  ##  PAINT HAS BEEN REMOVED FROM THE SPREADSHEET FOR NOW...
-    #     title = "PNT"
+    elif title == "90 XPNT":  ##  PAINT HAS BEEN REMOVED FROM THE SPREADSHEET FOR NOW... (PUT BACK IN 10/01/2019 SEE ^^ FOR EXPLANATION)
+        title = "PNT"
     elif title == "36 SANDBL":
         title = "SBL"
     elif title == "21 PC":
