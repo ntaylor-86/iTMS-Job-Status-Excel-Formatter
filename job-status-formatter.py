@@ -43,6 +43,7 @@ print("                      the STOPA column will be positioned after the 3030 
 print("version 1.8 - UPDATE, The columns it checks for LASER CUT ONLY need to be updated after adding the STOPA column")
 print("version 1.9 - BUG FIX, put '90 XPNT' back into the correct_order array, with no 53 BSAW")
 print("                       this was causing issues.")
+print("version 2.0 - UPDATE, Now highlights jobs that will be [ PACK AT PRESS ]")
 print("")
 
 ###############################
@@ -76,6 +77,7 @@ yellow_background_colour = PatternFill("solid", fgColor="ffff00")  # This will f
 bussy_blue_background_colour = PatternFill("solid", fgColor="d4f4f9") # blue for bustech
 all_clocked_colour = PatternFill("solid", fgColor="C6EFCE")  # all clocked colour is green
 laser_cut_only_colour = PatternFill("solid", fgColor="32e3ff")  # jobs that are laser cut only
+pack_at_press_colour = PatternFill("solid", fgColor="31869b")  # jobs that are laser cut only
 
 white_font_colour = Font(color="ffffff")
 ###############################
@@ -378,13 +380,13 @@ for x in highlight_process_array:
 print("Finding the rows which are LASER only...")
 laser_only_rows = []
 for row_counter, row in enumerate(all_rows_reordered, 2):
-        row_is_laser_only = True
-        for column_counter, column in enumerate(row, 1):
-            if column_counter >= 11:  #  only looking at columns past STOPA & CLEAN
-                if column != None:
-                    row_is_laser_only = False
-        if row_is_laser_only:
-            laser_only_rows.append(row_counter)
+    row_is_laser_only = True
+    for column_counter, column in enumerate(row, 1):
+        if column_counter >= 11:  #  only looking at columns past STOPA & CLEAN
+            if column != None:
+                row_is_laser_only = False
+    if row_is_laser_only:
+        laser_only_rows.append(row_counter)
 
 print("Highlighting all the rows which are LASER only...")
 for x in laser_only_rows:
@@ -396,6 +398,29 @@ for x in laser_only_rows:
     cell.font = white_font_colour
     cell.value = "{0}  [ LASER CUT ONLY ]".format(text)
 
+print("Finding the rows which will be PACK AT PRESS...")
+pack_at_press_rows = []
+for row_counter, row in enumerate(all_rows_reordered, 2):
+    row_is_pack_at_press = True
+    for column_counter, column in enumerate(row, 1):
+        if column_counter >= 14:  # only looking at columns past FOLD
+            if column != None:
+                row_is_pack_at_press = False
+    if row_is_pack_at_press:
+        pack_at_press_rows.append(row_counter)
+
+print("Highlighting all the rows which are PACK AT PRESS...")
+for x in pack_at_press_rows:
+    # checking if the row number is already in the LASER CUT ONLY row
+    if x in laser_only_rows:
+        continue  # if it is, we will skip it
+    cell_coordinate = "D{0}".format(x)
+    cell = new_sheet[cell_coordinate]
+    text = cell.value
+    print("{0} - {1}".format(x, text))
+    cell.fill = pack_at_press_colour
+    cell.font = white_font_colour
+    cell.value = "{0}  [ PACK AT PRESS ]".format(text)
 
 print("Deleting rows from the spreadsheet if the 'Job Status' is all clocked,")
 print("    and the customer is in the 'clients_to_delete_if_row_all_clocked'")
