@@ -77,7 +77,7 @@ yellow_background_colour = PatternFill("solid", fgColor="ffff00")  # This will f
 bussy_blue_background_colour = PatternFill("solid", fgColor="d4f4f9") # blue for bustech
 all_clocked_colour = PatternFill("solid", fgColor="C6EFCE")  # all clocked colour is green
 laser_cut_only_colour = PatternFill("solid", fgColor="32e3ff")  # jobs that are laser cut only
-pack_at_press_colour = PatternFill("solid", fgColor="31869b")  # jobs that are laser cut only
+pack_at_press_colour = PatternFill("solid", fgColor="b1a0c7")  # jobs that are laser cut only
 
 white_font_colour = Font(color="ffffff")
 ###############################
