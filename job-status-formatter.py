@@ -44,6 +44,8 @@ print("version 1.8 - UPDATE, The columns it checks for LASER CUT ONLY need to be
 print("version 1.9 - BUG FIX, put '90 XPNT' back into the correct_order array, with no 53 BSAW")
 print("                       this was causing issues.")
 print("version 2.0 - UPDATE, Now highlights jobs that will be [ PACK AT PRESS ]")
+print("version 2.1 - BUG FIX, the addition of SAW column in the schedule was breaking")
+print("                       the PACK AT PRESS function.")
 print("")
 
 ###############################
@@ -402,8 +404,18 @@ print("Finding the rows which will be PACK AT PRESS...")
 pack_at_press_rows = []
 for row_counter, row in enumerate(all_rows_reordered, 2):
     row_is_pack_at_press = True
+
+    # testing if 'SAW' column is in the schedule
+    # if it is the fold column will be along by one
+    if "53 BSAW" in re_ordered_headings:
+        # if SAW is in the schedule the fold column will be 14
+        fold_column_number = 14
+    else:
+        # if SAW is not in the schedule the fold column will be 13
+        fold_column_number = 13
+        
     for column_counter, column in enumerate(row, 1):
-        if column_counter >= 14:  # only looking at columns past FOLD
+        if column_counter > fold_column_number:  # only looking at columns past FOLD
             if column != None:
                 row_is_pack_at_press = False
     if row_is_pack_at_press:
