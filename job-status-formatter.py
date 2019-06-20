@@ -46,6 +46,7 @@ print("                       this was causing issues.")
 print("version 2.0 - UPDATE, Now highlights jobs that will be [ PACK AT PRESS ]")
 print("version 2.1 - BUG FIX, the addition of SAW column in the schedule was breaking")
 print("                       the PACK AT PRESS function.")
+print("version 2.2 - UPDATE, pack at press colour updated.")
 print("")
 
 ###############################
@@ -79,7 +80,7 @@ yellow_background_colour = PatternFill("solid", fgColor="ffff00")  # This will f
 bussy_blue_background_colour = PatternFill("solid", fgColor="d4f4f9") # blue for bustech
 all_clocked_colour = PatternFill("solid", fgColor="C6EFCE")  # all clocked colour is green
 laser_cut_only_colour = PatternFill("solid", fgColor="32e3ff")  # jobs that are laser cut only
-pack_at_press_colour = PatternFill("solid", fgColor="b1a0c7")  # jobs that are laser cut only
+pack_at_press_colour = PatternFill("solid", fgColor="006ec0")  # jobs that are laser cut only
 
 white_font_colour = Font(color="ffffff")
 ###############################
