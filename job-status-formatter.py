@@ -47,6 +47,7 @@ print("version 2.0 - UPDATE, Now highlights jobs that will be [ PACK AT PRESS ]"
 print("version 2.1 - BUG FIX, the addition of SAW column in the schedule was breaking")
 print("                       the PACK AT PRESS function.")
 print("version 2.2 - UPDATE, pack at press colour updated.")
+print("version 2.3 - UPDATE, Refining the PACK AT PRESS function.")
 print("")
 
 ###############################
@@ -185,6 +186,9 @@ for department in correct_order:  #
     if department in index_dictionary:  # checking to see if the department is in the dictionary
         # print("{} is at index: {}".format(department, index_dictionary[department]))
         correct_index_order.append(index_dictionary[department])
+        if department == "51 FOLD":
+            print('Found the FOLD column')
+            FOLD_COLUMN = ( len(correct_index_order) - 1 )
     else:
         print("could not find {}".format(department))
 
@@ -404,23 +408,31 @@ for x in laser_only_rows:
 print("Finding the rows which will be PACK AT PRESS...")
 pack_at_press_rows = []
 for row_counter, row in enumerate(all_rows_reordered, 2):
-    row_is_pack_at_press = True
+    # checking if there is a value in the FOLD column
+    # if there is a value, it will proceed to check if this row
+    # is pack at press
+    if row[FOLD_COLUMN] != None:
+        row_is_pack_at_press = True
 
-    # testing if 'SAW' column is in the schedule
-    # if it is the fold column will be along by one
-    if "53 BSAW" in re_ordered_headings:
-        # if SAW is in the schedule the fold column will be 14
-        fold_column_number = 14
+        # testing if 'SAW' column is in the schedule
+        # if it is the fold column will be along by one
+        if "53 BSAW" in re_ordered_headings:
+            # if SAW is in the schedule the fold column will be 14
+            fold_column_number = 14
+        else:
+            # if SAW is not in the schedule the fold column will be 13
+            fold_column_number = 13
+            
+        for column_counter, column in enumerate(row, 1):
+            if column_counter > fold_column_number:  # only looking at columns past FOLD
+                if column != None:
+                    row_is_pack_at_press = False
+        if row_is_pack_at_press:
+            pack_at_press_rows.append(row_counter)
     else:
-        # if SAW is not in the schedule the fold column will be 13
-        fold_column_number = 13
-        
-    for column_counter, column in enumerate(row, 1):
-        if column_counter > fold_column_number:  # only looking at columns past FOLD
-            if column != None:
-                row_is_pack_at_press = False
-    if row_is_pack_at_press:
-        pack_at_press_rows.append(row_counter)
+        # skipping over the row if there is no
+        # value in the FOLD column
+        continue
 
 print("Highlighting all the rows which are PACK AT PRESS...")
 for x in pack_at_press_rows:
