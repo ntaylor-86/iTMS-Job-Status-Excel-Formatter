@@ -48,6 +48,7 @@ print("version 2.1 - BUG FIX, the addition of SAW column in the schedule was bre
 print("                       the PACK AT PRESS function.")
 print("version 2.2 - UPDATE, pack at press colour updated.")
 print("version 2.3 - UPDATE, Refining the PACK AT PRESS function.")
+print("version 2.4 - UPDATE, The FOLD row is now after LIS.")
 print("")
 
 ###############################
@@ -162,9 +163,9 @@ correct_order = [  # this is the correct order that 'G' wants
     "4 3030",
     "44 STPCLN",
     "56 LISMAC",
+    "51 FOLD",
     "6 ROTO",
     "53 BSAW",
-    "51 FOLD",
     "58 GMAC",
     "67 PEMS",
     "7 TIG",
@@ -413,18 +414,9 @@ for row_counter, row in enumerate(all_rows_reordered, 2):
     # is pack at press
     if row[FOLD_COLUMN] != None:
         row_is_pack_at_press = True
-
-        # testing if 'SAW' column is in the schedule
-        # if it is the fold column will be along by one
-        if "53 BSAW" in re_ordered_headings:
-            # if SAW is in the schedule the fold column will be 14
-            fold_column_number = 14
-        else:
-            # if SAW is not in the schedule the fold column will be 13
-            fold_column_number = 13
             
         for column_counter, column in enumerate(row, 1):
-            if column_counter > fold_column_number:  # only looking at columns past FOLD
+            if column_counter > ( FOLD_COLUMN + 1 ):  # only looking at columns past FOLD
                 if column != None:
                     row_is_pack_at_press = False
         if row_is_pack_at_press:
