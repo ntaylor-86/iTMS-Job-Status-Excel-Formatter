@@ -419,6 +419,23 @@ for row_counter, row in enumerate(all_rows_reordered, 2):
             if column_counter > ( FOLD_COLUMN + 1 ):  # only looking at columns past FOLD
                 if column != None:
                     row_is_pack_at_press = False
+        
+        # G did not want jobs with these customers
+        # to be highlighted as [ PACK AT PRESS ]
+        no_pack_at_press_customers = [
+            "EXTERNAL-RECUT",
+            "EXTERNAL-REWORK",
+            "INTERNAL",
+            "LIQUIP",
+            "RECUT-INTERNAL",
+            "REWORK-INTERNAL"
+        ]
+        # row[2] is the customer row
+        if row[2] in no_pack_at_press_customers:
+            # if the customer is in the no_pack_at_press_customers array
+            # the loop will skip over them
+            continue
+
         if row_is_pack_at_press:
             pack_at_press_rows.append(row_counter)
     else:
